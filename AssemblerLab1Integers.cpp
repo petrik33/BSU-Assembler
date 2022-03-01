@@ -8,6 +8,7 @@ int main()
 {
 	int x;
 	short res = 0;
+	cout << "Enter an integer number.\n";
 	cin >> x;
 	_asm {
 		mov eax, x
@@ -19,5 +20,5 @@ int main()
 		loop l1
 	mov res, bx
 	}
-	cout << res;
+	cout << "Number of unit digits: " << res << "\n";
 }
