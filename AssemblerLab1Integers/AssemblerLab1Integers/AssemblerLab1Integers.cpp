@@ -4,11 +4,27 @@
 #include <iostream>
 using namespace std;
 
+int AsmCountUnitDigits(unsigned short x)
+{
+	short res = 0;
+	_asm {
+		mov ax, x
+		mov ecx, 16
+		mov bx, 0
+		l1:
+		shr eax, 1
+			adc bx, 0
+			loop l1
+			mov res, bx
+	}
+	return res;
+}
+
 int main()
 {
 	int x;
-	short res = 0;
-	cout << "Enter a natural number: ";
+	
+	cout << "Enter an unsigned short number: ";
 	cin >> x;
 	while (x > 65535 || x < 0)
 	{
@@ -16,15 +32,5 @@ int main()
 		cin >> x;
 	}
 
-	_asm {
-		mov eax, x
-		mov ecx,16
-		mov bx,0
-	l1:
-		shr eax,1
-		adc bx,0
-		loop l1
-	mov res, bx
-	}
-	cout << "Number of unit digits: " << res << "\n";
+	cout << "Number of unit digits: " << AsmCountUnitDigits(x) << "\n";
 }
